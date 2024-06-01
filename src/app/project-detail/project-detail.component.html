@@ -1,0 +1,92 @@
+<div *ngIf="project" class="form-container">
+  <h2>პროექტის დეტალები</h2>
+  <form [formGroup]="projectForm" (ngSubmit)="saveProjectDetails()">
+    <div class="form-group">
+      <label for="name">პროექტის დასახელება</label>
+      <input id="name" type="text" class="form-control" [value]="project.name" readonly>
+    </div>
+    <div class="form-group">
+      <label for="priority">პრიორიტეტი</label>
+      <select id="priority" class="form-control" [value]="project.priority" disabled>
+        <option value="დაბალი">დაბალი</option>
+        <option value="საშუალო">საშუალო</option>
+        <option value="მაღალი">მაღალი</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="manager">პროექტის მენეჯერი</label>
+      <input id="manager" type="text" class="form-control" [value]="project.manager" readonly>
+    </div>
+    <div class="form-group">
+      <label for="initiatorDepartment">ინიციატორი დეპარტამენტი</label>
+      <input id="initiatorDepartment" type="text" class="form-control" [value]="project.initiatorDepartment" readonly>
+    </div>
+    <div class="form-group">
+      <label for="contactPerson">საკონტაქტო პირი</label>
+      <input id="contactPerson" type="text" class="form-control" [value]="project.contactPerson" readonly>
+    </div>
+    <div class="form-group">
+      <label for="startDate">დაწყების თარიღი</label>
+      <input id="startDate" type="date" class="form-control" [value]="project.startDate" readonly>
+    </div>
+    <div class="form-group">
+      <label for="endDate">დასრულების თარიღი</label>
+      <input id="endDate" type="date" class="form-control" [value]="project.endDate" readonly>
+    </div>
+    <div class="form-group">
+      <label for="description">აღწერა</label>
+      <textarea id="description" class="form-control" readonly>{{ project.description }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="file">ფაილი</label>
+      <input id="file" type="file" class="form-control" (change)="onFileChange($event)" disabled>
+    </div>
+    <div *ngIf="project.file" class="form-group">
+      <a [href]="project.file" target="_blank">ფაილი ნახვა</a>
+    </div>
+    <div class="form-group">
+      <label for="teamName">გუნდის სახელი</label>
+      <input id="teamName" type="text" class="form-control" [value]="project.teamName" readonly>
+    </div>
+    <div formArrayName="members">
+      <div *ngFor="let member of members.controls; let i=index" [formGroupName]="i" class="member-group">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">სახელი, გვარი</label>
+            <input id="fullName" type="text" [value]="member.value.fullName" readonly>
+          </div>
+          <div class="form-group">
+            <label for="personalId">პირადი ნომერი</label>
+            <input id="personalId" type="text" [value]="member.value.personalId" (keypress)="allowOnlyNumbers($event)" readonly>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">ტელეფონის ნომერი</label>
+            <input id="phoneNumber" type="text" [value]="member.value.phoneNumber" (keypress)="allowOnlyNumbers($event)" readonly>
+          </div>
+          <div class="form-group">
+            <label for="email">ელექტრონული ფოსტა</label>
+            <input id="email" type="email" [value]="member.value.email" readonly>
+          </div>
+          <div class="form-group">
+            <label for="role">როლი</label>
+            <select id="role" [value]="member.value.role" disabled>
+              <option value="ანალიტიკოსი">ანალიტიკოსი</option>
+              <option value="დეველოპერი">დეველოპერი</option>
+              <option value="ტესტერი">ტესტერი</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">სტატუსის განახლება:</label>
+      <select id="status" (change)="updateStatus($event)" formControlName="status" class="form-control" [disabled]="!canEditStatus">
+        <option value="მიმდინარე" [selected]="project.status === 'მიმდინარე'">მიმდინარე</option>
+        <option value="შეჩერებული" [selected]="project.status === 'შეჩერებული'">შეჩერებული</option>
+        <option value="დასრულებული" [selected]="project.status === 'დასრულებული'">დასრულებული</option>
+      </select>
+    </div>
+    <button type="submit" class="submit-button" [disabled]="!canEditStatus">ცვლილების შენახვა</button>
+  </form>
+  <button (click)="goBack()" class="back-button">უკან დაბრუნება</button>
+</div>

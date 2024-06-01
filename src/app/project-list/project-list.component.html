@@ -1,0 +1,73 @@
+<div class="project-list-container">
+  <h2>დარეგისტრირებული პროექტები</h2>
+
+  <div class="search-bar">
+    <input [(ngModel)]="searchCriteria.name" placeholder="პროექტის სახელი">
+    <input [(ngModel)]="searchCriteria.uniqueNumber" placeholder="პროექტის ნომერი">
+    <input [(ngModel)]="searchCriteria.status" placeholder="სტატუსი">
+    <input [(ngModel)]="searchCriteria.startDate" type="date" placeholder="დაწყების თარიღი">
+    <input [(ngModel)]="searchCriteria.endDate" type="date" placeholder="დასრულების თარიღი">
+    <input [(ngModel)]="searchCriteria.manager" placeholder="პროექტის ხელმძღვანელი">
+    <input [(ngModel)]="searchCriteria.teamName" placeholder="გუნდის სახელი">
+    <button (click)="searchProjects()" class="search-button">ძიება</button>
+    <button (click)="clearSearch()" class="clear-button">გასუფთავება</button>
+  </div>
+
+  <div class="project-count">
+    ნაპოვნია {{ filteredProjects.length }} პროექტი
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th (click)="sortProjects('name')">პროექტის სახელი</th>
+        <th>პროექტის ხელმძღვანელი</th>
+        <th (click)="sortProjects('uniqueNumber')">პროექტის ნომერი</th>
+        <th (click)="sortProjects('priority')">პრიორიტეტი</th>
+        <th (click)="sortProjects('startDate')">დაწ. თარიღი</th>
+        <th (click)="sortProjects('endDate')">დასრ. თარიღი</th>
+        <th>ფაილი</th>
+        <th (click)="sortProjects('status')">სტატუსი</th>
+        <th>გუნდის სახელი</th>
+        <th>შესრულების პროცენტი</th>
+        <th>მოქმედება</th>
+        <th>სტატუსის განახლების თარიღი</th>
+        <th>რედაქტირება</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of filteredProjects" [ngClass]="{'overdue': isOverdue(project)}">
+        <td><a [routerLink]="['/projects', project.uniqueNumber]">{{ project.name }}</a></td>
+        <td>{{ project.manager }}</td>
+        <td>{{ project.uniqueNumber }}</td>
+        <td>{{ project.priority }}</td>
+        <td>{{ project.startDate }}</td>
+        <td>{{ project.endDate }}</td>
+        <td>
+          <a *ngIf="project.file" [attr.href]="project.file" target="_blank" download>ფაილი ნახვა</a>
+          <span *ngIf="!project.file">ფაილი არ არის</span>
+        </td>
+        <td>{{ project.status }}</td>
+        <td>{{ project.teamName }}</td>
+        <td>{{ project.progress }}%</td>
+        <td>
+          <button *ngIf="project.status !== 'დასრულებული'" (click)="setProgress(project)" class="set-progress-button">შესრულების განსაზღვრა</button>
+        </td>
+        <td>
+          <span *ngIf="project.statusUpdateDate">{{ project.statusUpdateDate | date: 'dd/MM/yyyy' }}</span>
+          <span *ngIf="!project.statusUpdateDate">სტატუსი არ შეცვლილა</span>
+        </td>
+        <td>
+          <button (click)="goToProjectDetail(project.uniqueNumber)" class="edit-button">რედაქტირება</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedProject" class="progress-modal">
+    <h3>{{ selectedProject.name }} - შესრულების პროცენტი</h3>
+    <input [(ngModel)]="newProgress" type="number" min="0" max="100" placeholder="შესრულების პროცენტი">
+    <button (click)="updateProgress()" class="update-progress-button">შენახვა</button>
+  
+  </div>
+</div>

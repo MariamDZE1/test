@@ -1,0 +1,150 @@
+.form-container {
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f3f4; 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #000080; 
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #202124; 
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px.8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #34a853; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px; 
+}
+
+.submit-button:hover {
+  background-color: #2a9f4d; 
+}
+
+.success-message {
+  margin-top: 20px;
+  color: #000080;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.member-group {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #ddd; 
+}
+
+.add-member-button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.add-member-button:hover {
+  background-color: #0069d9; 
+}
+
+.remove-member-button {
+  width: auto;
+  padding: 5px 10px;
+  background-color: #dc3545; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.remove-member-button:hover {
+  background-color: #c82333; 
+}
+
+.remove-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
+.member-group .form-group {
+  margin-bottom: 10px;
+}
+
+.member-group label small {
+  display: block;
+  font-size: 0.8em;
+  color: #777;
+}
+
+.form-container {
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f3f4; 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+  }
+
+  .add-member-button,
+  .remove-member-button,
+  .submit-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

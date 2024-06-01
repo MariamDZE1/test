@@ -1,0 +1,86 @@
+<div class="form-container">
+  <h2>პროექტის რეგისტრაცია</h2>
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">პროექტის დასახელება</label>
+      <input id="name" formControlName="name" type="text">
+    </div>
+    <div class="form-group">
+      <label for="priority">პრიორიტეტი</label>
+      <select id="priority" formControlName="priority">
+        <option value="დაბალი">დაბალი</option>
+        <option value="საშუალო">საშუალო</option>
+        <option value="მაღალი">მაღალი</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="manager">პროექტის ხელმძღვანელი</label>
+      <input id="manager" formControlName="manager" type="text">
+    </div>
+    <div class="form-group">
+      <label for="initiatorDepartment">ინიციატორი დეპარტამენტი</label>
+      <input id="initiatorDepartment" formControlName="initiatorDepartment" type="text">
+    </div>
+    <div class="form-group">
+      <label for="contactPerson">საკონტაქტო პირი</label>
+      <input id="contactPerson" formControlName="contactPerson" type="text">
+    </div>
+    <div class="form-group">
+      <label for="startDate">დაწყების თარიღი</label>
+      <input id="startDate" formControlName="startDate" type="date">
+    </div>
+    <div class="form-group">
+      <label for="endDate">დასრულების თარიღი</label>
+      <input id="endDate" formControlName="endDate" type="date">
+    </div>
+    <div class="form-group">
+      <label for="description">აღწერა</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="file">ფაილი</label>
+      <input id="file" type="file" (change)="onFileChange($event)">
+    </div>
+    <div class="form-group">
+      <label for="teamName">გუნდის სახელი</label>
+      <input id="teamName" formControlName="teamName" type="text">
+    </div>
+    <div formArrayName="members">
+      <div *ngFor="let member of members.controls; let i=index" [formGroupName]="i" class="member-group">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">სახელი, გვარი</label>
+            <input id="fullName" formControlName="fullName" type="text">
+          </div>
+          <div class="form-group">
+            <label for="personalId">პირადი ნომერი <small>(ჩაწერეთ მხოლოდ ციფრები)</small></label>
+            <input id="personalId" formControlName="personalId" type="text" (keypress)="allowOnlyNumbers($event)">
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">ტელეფონის ნომერი <small>(ჩაწერეთ მხოლოდ ციფრები)</small></label>
+            <input id="phoneNumber" formControlName="phoneNumber" type="text" (keypress)="allowOnlyNumbers($event)">
+          </div>
+          <div class="form-group">
+            <label for="email">ელექტრონული ფოსტა <small>(ჩაწერეთ მხოლოდ აქტიური ელ.ფოსტა)</small></label>
+            <input id="email" formControlName="email" type="email" style="width: 300px; height: 30px;">
+          </div>
+          <div class="form-group">
+            <label for="role">როლი</label>
+            <select id="role" formControlName="role">
+              <option value="ანალიტიკოსი">ანალიტიკოსი</option>
+              <option value="დეველოპერი">დეველოპერი</option>
+              <option value="ტესტერი">ტესტერი</option>
+            </select>
+          </div>
+          <div class="form-group remove-button-group">
+            <button type="button" class="remove-member-button" (click)="removeMember(i)"> წევრის წაშლა</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="add-member-button" (click)="addMember()">დაამატე გუნდის წევრები</button>
+
+    <button type="submit" class="submit-button">რეგისტრაცია</button>
+  </form>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+</div>
